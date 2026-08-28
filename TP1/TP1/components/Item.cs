@@ -16,6 +16,7 @@ public class Item {
     public void usar() {
         Console.WriteLine($"se uso {Tipo}");
         //aqui realizamos un metodo que se encargue de modificar params de jugador 
+        //tambien modifica el inventario dejando un param vacio
     }
 
     public void mostrarDetalle() {
@@ -23,9 +24,9 @@ public class Item {
     }
 }
 
-public class Posion : Item {
-    public Posion() {
-        Tipo="Posion";
+public class Pocion : Item {
+    public Pocion() {
+        Tipo="Pocion";
     }
 }
 public class Reliquia : Item {
