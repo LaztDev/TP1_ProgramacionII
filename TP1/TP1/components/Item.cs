@@ -15,6 +15,7 @@ public class Item {
 
     public void usar() {
         Console.WriteLine($"se uso {Tipo}");
+        //aqui realizamos un metodo que se encargue de modificar params de jugador 
     }
 
     public void mostrarDetalle() {
@@ -32,9 +33,3 @@ public class Reliquia : Item {
         Tipo = "Reliquia";
     }
 }
-
-
-
-
-
-

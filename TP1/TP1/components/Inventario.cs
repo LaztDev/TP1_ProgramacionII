@@ -1,2 +1,11 @@
-﻿
-namespace TP1.components;
+﻿namespace TP1.components;
+
+public class Inventario {
+
+
+
+}
+
+
+
+
