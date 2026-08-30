@@ -5,11 +5,14 @@ public class Jugador {
     public int vidaActual;
     public int vidaMaxima;
     public int ataqueBase;
-    public int ataqueTotal;
+    public int ataqueTemporal;
     public int oro;
     public int pisoActual;
     public Inventario inventario;
     private List<ItemReliquia> reliquias;
+    public int ataqueTotal {
+        get { return ataqueBase + ataqueTemporal; }
+    }
 
     public void atacar() {
         
