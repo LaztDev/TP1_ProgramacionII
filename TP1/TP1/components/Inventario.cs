@@ -1,8 +1,7 @@
 ﻿namespace TP1.components;
 
 public class Inventario {
-    public List<ItemPocion> pociones;
-
+    public List<Pocion> pociones = new List<Pocion>();
     public int capacidadMaxima = 3;
 
 
