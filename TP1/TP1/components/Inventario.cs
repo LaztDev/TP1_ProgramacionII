@@ -24,8 +24,15 @@ public class Inventario {
 
     }
     public void listarPociones() {
-        foreach (Pocion pocion in pociones) {
-            pocion.mostrarDetalle();
+        int PocionesDisp = pociones.Count() > 0 ? pociones.Count() : 0;
+        if (PocionesDisp == 0) {
+            for (int i = 0; i <= 3; i++) { Console.WriteLine($"{i + 1}. Vacío"); }
+        }
+        else {
+            for (int i = 0; i < PocionesDisp; i++) {
+                Console.WriteLine($"{i + 1}. {pociones[i].Nombre}");
+            }
+            for (int i = PocionesDisp; i < 3; i++) { Console.WriteLine($"{i + 1}. Vacío"); }
         }
     }
 }
