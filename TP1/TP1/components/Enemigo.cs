@@ -1,17 +1,24 @@
 ﻿namespace TP1.components;
 
 public class Enemigo {
-    public string nombre { get; protected set; }
-    public int vida { get; set; }
-    public int puntosAtaque { get; protected set; }
-    public int oroRecompensa { get; protected set; }
-    public Item posibleDrop;
+    public string Nombre { get; protected set; }
+    public int Vida { get; set; }
+    public int PuntosAtaque { get; protected set; }
+    public int OroRecompensa { get; protected set; }
+    // public Item posibleDrop = ItemRandom();
 
-    public void atacar(Jugador) {
-
+    public Enemigo(string nombre) {
+        Nombre = nombre;
     }
-    public void estaVivo() {
-
+    public void atacar(Jugador player) {
+        player.VidaActual -= PuntosAtaque;  
     }
+    public bool estaVivo() {
+        bool estaVivo = Vida > 0 ? true : false;
+        return estaVivo;
+    }
+   // public void ItemRandom(Random random) {
+   //    double ItemProb = random.NextDouble();       
+   // }
 
 }
