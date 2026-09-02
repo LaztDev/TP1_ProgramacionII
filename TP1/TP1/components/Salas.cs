@@ -1,22 +1,20 @@
 ﻿using System.ComponentModel;
-
 namespace TP1.components;
 
 class Salas {
-
-    
-    public void Combate(Jugador player, Enemigo monstruo, Random random) {
+    public void Combate(Jugador player, Enemigo monstruo, Random random, int PisosTotales) {
         do {
             //turno del jugador
-            accionJugador(player, monstruo, random);
+            accionJugador(player, monstruo, random, PisosTotales);
             //turno del monstruo
             monstruo.atacar(player);
         } while (player.VidaActual > 0 && monstruo.estaVivo());
+        // deberia agruegar una variable bandera para definir si es game over o no 
     }
     public void Tienda(Jugador player) {
         List<Item> itemsEnVenta = new List<Item> {
             new Pocion("Poción de Vida","pocion", "vida", 10, 20),
-            new Pocion("Poción de Ataque","pocion", "ataque", 5, 30),
+            new Pocion("Poción de Ataque","pocion", "daño", 5, 30),
             new Reliquia("Reliquia de Fuerza", "reliquia","daño", 5, 200)
         };
         for (int i = 0; i < itemsEnVenta.Count; i++) {
@@ -25,11 +23,11 @@ class Salas {
         Console.WriteLine("Seleccione una accion para realizar");
         Console.WriteLine("[1]Comprar   [2]Comprar   [3]Salir sin comprar");
         int opcion = validarSeleccion(4);
-        while (true) { 
+        while (true) {
             if (opcion == 1 || opcion == 2) {
                 for (int i = 0; i < itemsEnVenta.Count; i++) {
                     if (opcion == i) {
-                        if (player.Oro > itemsEnVenta[i].Precio) { 
+                        if (player.Oro > itemsEnVenta[i].Precio) {
                             if (player.inventario.pociones.Count < 3) {
                                 player.Oro -= itemsEnVenta[i].Precio;
                                 player.inventario.agregarPocion((Pocion)itemsEnVenta[i]);
@@ -52,7 +50,7 @@ class Salas {
         }
     }
     public void Descanso(Jugador player) {
-        while (true) { 
+        while (true) {
             Console.WriteLine("Seleccione una accion para realizar");
             Console.WriteLine("[1]Descansar y seguir  [2]Seguir adelante");
             int opcion = validarSeleccion(2);
@@ -61,23 +59,24 @@ class Salas {
                 Console.WriteLine("has descansado tu vida se a recuperado");
                 break;
             }
-            else if (opcion == 2) { 
-                Console.WriteLine("Sigues adelante"); 
+            else if (opcion == 2) {
+                Console.WriteLine("Sigues adelante");
                 break;
             }
-            
+
         }
     }
-    public void JefeFinal() {
-
-    } 
-    public void SalaDeCofres() {
+    public void JefeFinal(Jugador player, Enemigo monstruo, Random random, int PisosTotales) {
+        Combate(player, monstruo, random, PisosTotales);
+    }
+    public void SalaDeCofres(Random random, Jugador player) {
 
     }
+    //verificar uso de la logica de dados
     public int  dados(Random random) {
         return random.Next(1, 7);
     }
-    public void accionJugador(Jugador player, Enemigo monstruo, Random random) {
+    public void accionJugador(Jugador player, Enemigo monstruo, Random random, int PisosTotales) {
         Console.WriteLine("Elige una acción:");
         Console.WriteLine("[1] Atacar [2] Usar poción [3] Huir");
         int accion = validarSeleccion(3);
@@ -94,12 +93,17 @@ class Salas {
                 player.inventario.usarPocion(opcion, player);
                 break;
             case 3:
-                if (random.NextDouble() < 0.5) {
-                    Console.WriteLine("Lograste huir de la batalla!");
-                    monstruo.Vida = 0;
+                if (player.PisoActual == PisosTotales) {
+                    Console.WriteLine("No puedes huir del Jefe, Perdiste un turno por cobarde");
                 }
                 else {
-                    Console.WriteLine("No lograste huir, perdiste un turno");
+                    if (random.NextDouble() < 0.5) {
+                        Console.WriteLine("Lograste huir de la batalla!");
+                        monstruo.Vida = 0;
+                    }
+                    else {
+                        Console.WriteLine("No lograste huir, perdiste un turno");
+                    }
                 }
                 break;
             default:
