@@ -1,4 +1,6 @@
-﻿namespace TP1.components;
+﻿using System.ComponentModel;
+
+namespace TP1.components;
 
 class Salas {
 
@@ -11,8 +13,42 @@ class Salas {
             monstruo.atacar(player);
         } while (player.VidaActual > 0 && monstruo.estaVivo());
     }
-    public void Tienda() {
-
+    public void Tienda(Jugador player) {
+        List<Item> itemsEnVenta = new List<Item> {
+            new Pocion("Poción de Vida","pocion", "vida", 10, 20),
+            new Reliquia("Reliquia de Fuerza", "reliquia","daño", 5, 200)
+        };
+        for (int i = 0; i < itemsEnVenta.Count; i++) {
+            Console.WriteLine($"{i + 1}. {itemsEnVenta[i].Nombre}");
+        }
+        Console.WriteLine("Seleccione una accion para realizar");
+        Console.WriteLine("[1]Comprar   [2]Comprar   [3]Salir sin comprar");
+        int opcion = validarSeleccion();
+        while (true) { 
+            if (opcion == 1 || opcion == 2) {
+                for (int i = 0; i < itemsEnVenta.Count; i++) {
+                    if (opcion == i) {
+                        if (player.Oro > itemsEnVenta[i].Precio) { 
+                            if (player.inventario.pociones.Count < 3) {
+                                player.Oro -= itemsEnVenta[i].Precio;
+                                player.inventario.agregarPocion((Pocion)itemsEnVenta[i]);
+                                itemsEnVenta.RemoveAt(i);
+                            }
+                            else {
+                                Console.WriteLine("No puedes comprar más pociones, tu inventario está lleno.");
+                            }
+                        }
+                        else {
+                            Console.WriteLine("No tienes suficiente oro para comprar este item.");
+                        }
+                    }
+                }
+            }
+            else {
+                Console.WriteLine("Saliendo de la tienda...");
+                break;
+            }
+        }
     }
     public void Descanso() {
 
