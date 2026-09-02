@@ -70,7 +70,18 @@ class Salas {
         Combate(player, monstruo, random, PisosTotales);
     }
     public void SalaDeCofres(Random random, Jugador player) {
-
+        Console.Clear();
+        List<Reliquia> reliquias = new List<Reliquia>() {
+             new Reliquia("Reliquia de Fuerza", "reliquia","daño", 15, 200),
+             new Reliquia("Reliquia de Vida", "reliquia","vida", 20, 200),
+             new Reliquia("Reliquia de Fuerza", "reliquia","daño", 30, 200)
+        };
+        Console.WriteLine("----------------------------SALA DE COFRES----------------------------");
+        int reliquiaAleatoria = random.Next(0, 3);
+        Console.Write("se te a otorgado:");
+        reliquias[reliquiaAleatoria].mostrarDetalle();
+        player.equiparReliquia(reliquias[reliquiaAleatoria]);
+        Console.WriteLine("----------------------------------------------------------------------");
     }
     //verificar uso de la logica de dados
     public int  dados(Random random) {
