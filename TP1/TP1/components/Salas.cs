@@ -54,8 +54,18 @@ class Salas {
     public void Descanso(Jugador player) {
         while (true) { 
             Console.WriteLine("Seleccione una accion para realizar");
-            Console.WriteLine("[1]Descansar   [2]Seguir adelante");
+            Console.WriteLine("[1]Descansar y seguir  [2]Seguir adelante");
             int opcion = validarSeleccion(2);
+            if (opcion == 1) {
+                player.VidaActual += player.VidaActual <= (player.VidaMaxima / 3) * 2 ? player.VidaMaxima / 3 : player.VidaMaxima;
+                Console.WriteLine("has descansado tu vida se a recuperado");
+                break;
+            }
+            else if (opcion == 2) { 
+                Console.WriteLine("Sigues adelante"); 
+                break;
+            }
+            
         }
     }
     public void JefeFinal() {
