@@ -16,6 +16,7 @@ class Salas {
     public void Tienda(Jugador player) {
         List<Item> itemsEnVenta = new List<Item> {
             new Pocion("Poción de Vida","pocion", "vida", 10, 20),
+            new Pocion("Poción de Ataque","pocion", "ataque", 5, 30),
             new Reliquia("Reliquia de Fuerza", "reliquia","daño", 5, 200)
         };
         for (int i = 0; i < itemsEnVenta.Count; i++) {
@@ -23,7 +24,7 @@ class Salas {
         }
         Console.WriteLine("Seleccione una accion para realizar");
         Console.WriteLine("[1]Comprar   [2]Comprar   [3]Salir sin comprar");
-        int opcion = validarSeleccion();
+        int opcion = validarSeleccion(4);
         while (true) { 
             if (opcion == 1 || opcion == 2) {
                 for (int i = 0; i < itemsEnVenta.Count; i++) {
@@ -50,8 +51,12 @@ class Salas {
             }
         }
     }
-    public void Descanso() {
-
+    public void Descanso(Jugador player) {
+        while (true) { 
+            Console.WriteLine("Seleccione una accion para realizar");
+            Console.WriteLine("[1]Descansar   [2]Seguir adelante");
+            int opcion = validarSeleccion(2);
+        }
     }
     public void JefeFinal() {
 
@@ -64,10 +69,8 @@ class Salas {
     }
     public void accionJugador(Jugador player, Enemigo monstruo, Random random) {
         Console.WriteLine("Elige una acción:");
-        Console.WriteLine("1. Atacar");
-        Console.WriteLine("2. Usar poción");
-        Console.WriteLine("3. Huir");
-        int accion = validarSeleccion();
+        Console.WriteLine("[1] Atacar [2] Usar poción [3] Huir");
+        int accion = validarSeleccion(3);
         switch (accion) {
             case 1:
                 // implementar logica de golpes criticos
@@ -77,7 +80,7 @@ class Salas {
             case 2:
                 Console.WriteLine("Lista de pociones");
                 player.inventario.listarPociones();
-                int opcion = validarSeleccion();
+                int opcion = validarSeleccion(3);
                 player.inventario.usarPocion(opcion, player);
                 break;
             case 3:
@@ -94,10 +97,10 @@ class Salas {
                 break;
         }
     }
-    public int validarSeleccion() {
+    public int validarSeleccion(int maxOpcion) {
         int opcion;
         while (true) {
-            if (int.TryParse(Console.ReadLine(), out opcion) && opcion >= 1 && opcion <= 3) {
+            if (int.TryParse(Console.ReadLine(), out opcion) && opcion >= 1 && opcion <= maxOpcion) {
                 return opcion;
             }
             else { 
