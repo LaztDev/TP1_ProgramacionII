@@ -15,12 +15,17 @@ public class Jugador {
         get { return AtaqueBase + AtaqueTemporal; }
     }
 
-    public Jugador(string nombre) {
+    public Jugador(string nombre, int vidaMaxima, int ataqueBase, int oro) {
         Nombre = nombre;
+        VidaMaxima = vidaMaxima;
+        VidaActual = vidaMaxima;
+        AtaqueBase = ataqueBase;
+        Oro = oro;
+        PisoActual = 1;
     }
 
-    public void atacar(Enemigo monstruo) {
-        monstruo.vida = ataqueTotal >= monstruo.vida ? 0 : ataqueTotal - monstruo.vida;
+    public void atacar(Enemigo monstruo, int multiplicador) {
+        monstruo.Vida = ataqueTotal * multiplicador >= monstruo.Vida ? 0 : ataqueTotal * multiplicador - monstruo.Vida;
     }
 
     public void equiparReliquia(Reliquia reliquia) {

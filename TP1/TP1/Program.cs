@@ -1,4 +1,5 @@
 ﻿using TP1.components;
-
+Console.OutputEncoding = System.Text.Encoding.UTF8;
 Random random = new Random();
-Flujo FlujoDeJuego = new Flujo(random);
+Flujo flujo = new Flujo(random);
+flujo.FlujoJuego(random);

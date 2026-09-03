@@ -2,14 +2,17 @@
 namespace TP1.components;
 
 class Salas {
-    public void Combate(Jugador player, Enemigo monstruo, Random random, int PisosTotales) {
+    public bool Combate(Jugador player, Random random, float multiDificultad, int PisosTotales) {
+        bool finJuego = false;
+        Enemigo monstruo = new Enemigo("Monstruo", 10, 20, multiDificultad);
         do {
             //turno del jugador
             accionJugador(player, monstruo, random, PisosTotales);
             //turno del monstruo
             monstruo.atacar(player);
         } while (player.VidaActual > 0 && monstruo.estaVivo());
-        // deberia agruegar una variable bandera para definir si es game over o no 
+        // variable bandera para definir si es game over o no 
+        return finJuego = player.VidaActual <= 0 ? true : false;
     }
     public void Tienda(Jugador player) {
         List<Item> itemsEnVenta = new List<Item> {
@@ -66,8 +69,8 @@ class Salas {
 
         }
     }
-    public void JefeFinal(Jugador player, Enemigo monstruo, Random random, int PisosTotales) {
-        Combate(player, monstruo, random, PisosTotales);
+    public void JefeFinal(Jugador player, Enemigo monstruo, Random random, float multiDificultad, int PisosTotales) {
+        Combate(player, random,multiDificultad, PisosTotales);
     }
     public void SalaDeCofres(Random random, Jugador player) {
         Console.Clear();
@@ -83,7 +86,6 @@ class Salas {
         player.equiparReliquia(reliquias[reliquiaAleatoria]);
         Console.WriteLine("----------------------------------------------------------------------");
     }
-    //verificar uso de la logica de dados
     public int  dados(Random random) {
         return random.Next(1, 7);
     }
@@ -95,7 +97,16 @@ class Salas {
             case 1:
                 // implementar logica de golpes criticos
                 int TipoAtaque = dados(random);
-                player.atacar(monstruo);
+                if (TipoAtaque >= 5 && TipoAtaque <= 6) {
+                    Console.WriteLine("Golpe crítico!");
+                    player.atacar(monstruo, 2);
+                }
+                else if (TipoAtaque == 1) {
+                    player.atacar(monstruo, 0);
+                }
+                else {
+                    player.atacar(monstruo, 1);
+                }
                 break;
             case 2:
                 Console.WriteLine("Lista de pociones");

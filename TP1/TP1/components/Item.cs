@@ -30,12 +30,12 @@ public class Pocion : Item {
         SubTipo = subTipo;
     }
     public override void usar(Jugador player) {
-        int diferenciaDeVida = player.vidaMaxima - player.vidaActual;
+        int diferenciaDeVida = player.VidaMaxima - player.VidaActual;
         if (SubTipo== "vida") {
-            player.vidaActual += (player.vidaActual + Efecto >= player.vidaMaxima? diferenciaDeVida : Efecto);
+            player.VidaActual += (player.VidaActual + Efecto >= player.VidaMaxima? diferenciaDeVida : Efecto);
         }
         else if (SubTipo == "daño") {
-            player.ataqueTemporal += Efecto;
+            player.AtaqueTemporal += Efecto;
         }
     }
     public override void mostrarDetalle() {
@@ -57,16 +57,16 @@ public class Reliquia : Item {
     }
     public override void usar(Jugador player) {
         if (SubTipo == "vida") {
-            if (player.vidaActual == player.vidaMaxima) {
-                player.vidaMaxima += Efecto;
-                player.vidaActual = Efecto;
+            if (player.VidaActual == player.VidaMaxima) {
+                player.VidaMaxima += Efecto;
+                player.VidaActual = Efecto;
             }
             else {
-                player.vidaMaxima += Efecto;
+                player.VidaMaxima += Efecto;
             }
         }
         else if (SubTipo == "daño") {
-            player.ataqueBase += Efecto;
+            player.AtaqueBase += Efecto;
         }
     }
     public override void mostrarDetalle() {
