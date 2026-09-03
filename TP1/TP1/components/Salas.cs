@@ -3,6 +3,10 @@ namespace TP1.components;
 
 class Salas {
     public bool Combate(Jugador player, Random random, float multiDificultad, int PisosTotales) {
+        Console.ForegroundColor= ConsoleColor.Red;
+        Console.WriteLine("-------------------------------COMBATE-------------------------------");
+        Console.ResetColor();
+        player.mostrarEstado();
         bool finJuego = false;
         Enemigo monstruo = new Enemigo("Monstruo", 10, 20, multiDificultad);
         do {
@@ -11,10 +15,16 @@ class Salas {
             //turno del monstruo
             monstruo.atacar(player);
         } while (player.VidaActual > 0 && monstruo.estaVivo());
+        Console.ForegroundColor = ConsoleColor.Red;
+        Console.WriteLine("--------------------------------------------------------------------");
+        Console.ResetColor();
         // variable bandera para definir si es game over o no 
         return finJuego = player.VidaActual <= 0 ? true : false;
     }
     public void Tienda(Jugador player) {
+
+        Console.WriteLine("-------------------------------TIENDA-------------------------------");
+        player.mostrarEstado();
         List<Item> itemsEnVenta = new List<Item> {
             new Pocion("Poción de Vida","pocion", "vida", 10, 20),
             new Pocion("Poción de Ataque","pocion", "daño", 5, 30),

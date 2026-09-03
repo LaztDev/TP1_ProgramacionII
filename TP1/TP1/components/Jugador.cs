@@ -34,13 +34,20 @@ public class Jugador {
     }
 
     public void mostrarEstado() {
-        Console.WriteLine("====================================");
-        Console.WriteLine($"Vida: {VidaActual}/{VidaMaxima}");
-        Console.WriteLine($"Oro: {Oro}");
-        Console.WriteLine($"AtaqueTotal: {ataqueTotal} / Base: {AtaqueBase}");
-        Console.WriteLine($"//metodo para listar las reliquias");
-        Console.WriteLine($"//metodo que muestra el inventario");
-        Console.WriteLine($"PISO ACTUAL: {PisoActual}");
-        Console.WriteLine("====================================");
+        Console.WriteLine("====================================================================================");
+        Console.ForegroundColor = ConsoleColor.Red;
+        Console.Write($"Vida: {VidaActual} / {VidaMaxima}");
+        Console.ResetColor();
+        Console.ForegroundColor = ConsoleColor.Magenta;
+        Console.Write($"     AtaqueTotal: {ataqueTotal} / Base: {AtaqueBase}");
+        Console.ResetColor();
+        Console.WriteLine("");
+        Console.ForegroundColor = ConsoleColor.Yellow;
+        Console.Write($"Oro: {Oro}");
+        Console.ResetColor();
+        Console.ForegroundColor = ConsoleColor.Green;
+        Console.Write("           PISO ACTUAL: {PisoActual}");
+        Console.ResetColor();
+        Console.WriteLine("====================================================================================");
     }
 }
