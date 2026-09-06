@@ -8,8 +8,8 @@ class Flujo {
         PisosTotales = random.Next(10, 31); 
     }
     public void FlujoJuego(Random random) {
-        Jugador player = new Jugador("Jugador1", 10, 15, 50);
         Inventario inventario = new Inventario();
+        Jugador player = new Jugador("Jugador1", 10, 15, 50);
         Flujo flujo = new Flujo(random);
         Salas salas = new Salas();
         float multiDificultad = 0.5f;

@@ -22,8 +22,9 @@ class Salas {
         return finJuego = player.VidaActual <= 0 ? true : false;
     }
     public void Tienda(Jugador player) {
-
+        Console.ForegroundColor = ConsoleColor.DarkYellow;
         Console.WriteLine("-------------------------------TIENDA-------------------------------");
+        Console.ResetColor();
         player.mostrarEstado();
         List<Item> itemsEnVenta = new List<Item> {
             new Pocion("Poción de Vida","pocion", "vida", 10, 20),
@@ -61,8 +62,12 @@ class Salas {
                 break;
             }
         }
+
     }
     public void Descanso(Jugador player) {
+        Console.ForegroundColor = ConsoleColor.DarkBlue;
+        Console.WriteLine("------------------------------Descanso------------------------------");
+        Console.ResetColor();
         while (true) {
             Console.WriteLine("Seleccione una accion para realizar");
             Console.WriteLine("[1]Descansar y seguir  [2]Seguir adelante");
@@ -76,10 +81,16 @@ class Salas {
                 Console.WriteLine("Sigues adelante");
                 break;
             }
-
         }
+        Console.ForegroundColor = ConsoleColor.DarkBlue;
+        Console.WriteLine("--------------------------------------------------------------------");
+        Console.ResetColor();
     }
     public void JefeFinal(Jugador player, Enemigo monstruo, Random random, float multiDificultad, int PisosTotales) {
+        Console.Clear();
+        Console.ForegroundColor = ConsoleColor.DarkRed;
+        Console.WriteLine("------------------------------Jefe Final------------------------------");
+        Console.ResetColor();
         Combate(player, random,multiDificultad, PisosTotales);
     }
     public void SalaDeCofres(Random random, Jugador player) {
@@ -89,12 +100,16 @@ class Salas {
              new Reliquia("Reliquia de Vida", "reliquia","vida", 20, 200),
              new Reliquia("Reliquia de Fuerza", "reliquia","daño", 30, 200)
         };
+        Console.ForegroundColor = ConsoleColor.DarkCyan;
         Console.WriteLine("----------------------------SALA DE COFRES----------------------------");
+        Console.ResetColor();
         int reliquiaAleatoria = random.Next(0, 3);
         Console.Write("se te a otorgado:");
         reliquias[reliquiaAleatoria].mostrarDetalle();
         player.equiparReliquia(reliquias[reliquiaAleatoria]);
+        Console.ForegroundColor = ConsoleColor.DarkCyan;
         Console.WriteLine("----------------------------------------------------------------------");
+        Console.ResetColor();
     }
     public int  dados(Random random) {
         return random.Next(1, 7);
@@ -154,5 +169,4 @@ class Salas {
             }
         }
     }
-
 }

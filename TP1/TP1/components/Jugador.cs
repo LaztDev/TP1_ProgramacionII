@@ -34,20 +34,23 @@ public class Jugador {
     }
 
     public void mostrarEstado() {
-        Console.WriteLine("====================================================================================");
         Console.ForegroundColor = ConsoleColor.Red;
-        Console.Write($"Vida: {VidaActual} / {VidaMaxima}");
+        Console.Write($"❤  {VidaActual} / {VidaMaxima}  ");
         Console.ResetColor();
+
         Console.ForegroundColor = ConsoleColor.Magenta;
-        Console.Write($"     AtaqueTotal: {ataqueTotal} / Base: {AtaqueBase}");
+        Console.Write($"🗡  {ataqueTotal} / Base: {AtaqueBase}  ");
         Console.ResetColor();
-        Console.WriteLine("");
+
         Console.ForegroundColor = ConsoleColor.Yellow;
-        Console.Write($"Oro: {Oro}");
+        Console.Write($"🪙  {Oro}  ");
         Console.ResetColor();
+
         Console.ForegroundColor = ConsoleColor.Green;
-        Console.Write("           PISO ACTUAL: {PisoActual}");
+        Console.Write($"PISO ACTUAL: {PisoActual}  ");
         Console.ResetColor();
-        Console.WriteLine("====================================================================================");
+        Console.ForegroundColor = ConsoleColor.DarkGray;
+        Console.WriteLine("\n=====================================================================");
+        Console.ResetColor();
     }
 }
