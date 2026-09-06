@@ -14,25 +14,24 @@ public class Inventario {
     }
     public void usarPocion(int pocionSelec, Jugador player) {
         int pocionesDisp = pociones.Count();
-        if (pocionSelec > pocionesDisp - 1 && pocionSelec < 0) {
+        if (pocionSelec > pocionesDisp - 1 || pocionSelec <= 0) {
             Console.WriteLine("Vacio...");
         }
         else {
             pociones[pocionSelec - 1].usar(player);
             pociones.RemoveAt(pocionSelec - 1);
         }
-
     }
     public void listarPociones() {
         int PocionesDisp = pociones.Count() > 0 ? pociones.Count() : 0;
         if (PocionesDisp == 0) {
-            for (int i = 0; i <= 3; i++) { Console.WriteLine($"{i + 1}. Vacío"); }
+            for (int i = 0; i <= capacidadMaxima - 1; i++) { Console.WriteLine($"{i + 1}. Vacío"); }
         }
         else {
             for (int i = 0; i < PocionesDisp; i++) {
                 Console.WriteLine($"{i + 1}. {pociones[i].Nombre}");
             }
-            for (int i = PocionesDisp; i < 3; i++) { Console.WriteLine($"{i + 1}. Vacío"); }
+            for (int i = PocionesDisp; i < capacidadMaxima; i++) { Console.WriteLine($"{i + 1}. Vacío"); }
         }
     }
 }
