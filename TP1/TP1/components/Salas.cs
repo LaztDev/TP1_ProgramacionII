@@ -3,26 +3,28 @@ namespace TP1.components;
 
 class Salas {
     public bool Combate(Jugador player, Random random, float multiDificultad, int PisosTotales) {
-        Enemigo monstruo = new Enemigo("Monstruo", 10, 20, multiDificultad);
-        Console.Clear();
-        Console.ForegroundColor= ConsoleColor.Red;
-        Console.WriteLine("-------------------------------COMBATE-------------------------------");
-        Console.ResetColor();
-        player.mostrarEstado();
-        monstruo.mostrarEstado();
+        Enemigo monstruo = new Enemigo("Monstruo", 100, 20, multiDificultad);
         bool finJuego = false;
         do {
+            Console.Clear();
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.WriteLine("-------------------------------COMBATE-------------------------------");
+            Console.ResetColor();
+            player.mostrarEstado();
+            monstruo.mostrarEstado();
             //turno del jugador
             accionJugador(player, monstruo, random, PisosTotales);
             //turno del monstruo
             if (monstruo.estaVivo()) {
-                monstruo.atacar(player);
+                int TipoAtaque = dados(random);
+                monstruo.atacar(player, TipoAtaque);
             }
             else {
                 Console.WriteLine("El monstruo ha sido derrotado.");
                 Console.WriteLine($"Obtuviste: {monstruo.OroRecompensa}g");
                 player.Oro += monstruo.OroRecompensa;
             }
+            Console.ReadKey();
         } while (player.VidaActual > 0 && monstruo.estaVivo());
         Console.ForegroundColor = ConsoleColor.Red;
         Console.WriteLine("--------------------------------------------------------------------");
@@ -159,18 +161,8 @@ class Salas {
             case 1:
                 // implementar logica de golpes criticos
                 int TipoAtaque = dados(random);
-                if (TipoAtaque >= 5 && TipoAtaque <= 6) {
-                    Console.WriteLine("Golpe crítico!");
-                    player.atacar(monstruo, 2);
-                }
-                else if (TipoAtaque == 1) {
-                    player.atacar(monstruo, 0);
-                    Console.WriteLine("Fallaste el ataque!");
-                }
-                else {
-                    player.atacar(monstruo, 1);
-                    Console.WriteLine("Atacaste al enemigo!");
-                }
+                player.atacar(monstruo,TipoAtaque);
+                Console.WriteLine("-----------------");
                 break;
             case 2:
                 Console.WriteLine("Lista de pociones");

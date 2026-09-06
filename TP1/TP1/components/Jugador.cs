@@ -24,28 +24,37 @@ public class Jugador {
         PisoActual = 1;
     }
 
-    public void atacar(Enemigo monstruo, int multiplicador) {
-        monstruo.Vida = ataqueTotal * multiplicador >= monstruo.Vida ? 0 : ataqueTotal * multiplicador - monstruo.Vida;
-    }
+    public void atacar(Enemigo monstruo, int tipoAtaque) {
 
+        if (tipoAtaque>= 5 && tipoAtaque <= 6) {
+            Console.WriteLine("Ataque crítico!");
+            monstruo.Vida = ataqueTotal * 2 >= monstruo.Vida ? 0 : monstruo.Vida - ataqueTotal * 2;
+        }
+        else if (tipoAtaque >= 2 && tipoAtaque <= 4) {
+            Console.WriteLine("ataque normal!");
+            monstruo.Vida = ataqueTotal * 1 >= monstruo.Vida ? 0 : monstruo.Vida - ataqueTotal * 1;
+        }
+        else if (tipoAtaque == 1) {
+            Console.WriteLine("Fallaste el ataque!");
+            monstruo.Vida = ataqueTotal * 0 >= monstruo.Vida ? 0 : monstruo.Vida - ataqueTotal * 0;
+        }
+    }
     public void equiparReliquia(Reliquia reliquia) {
         reliquia.usar(this);
         reliquias.Add(reliquia);
     }
 
     public void mostrarEstado() {
+        Console.WriteLine($"Nombre: {Nombre}");
         Console.ForegroundColor = ConsoleColor.Red;
         Console.Write($"❤  {VidaActual} / {VidaMaxima}  ");
         Console.ResetColor();
-
         Console.ForegroundColor = ConsoleColor.Magenta;
         Console.Write($"🗡  {ataqueTotal} / Base: {AtaqueBase}  ");
         Console.ResetColor();
-
         Console.ForegroundColor = ConsoleColor.Yellow;
         Console.Write($"🪙  {Oro}  ");
         Console.ResetColor();
-
         Console.ForegroundColor = ConsoleColor.Green;
         Console.Write($"PISO ACTUAL: {PisoActual}  ");
         Console.ResetColor();

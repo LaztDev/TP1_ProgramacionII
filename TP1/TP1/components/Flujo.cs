@@ -12,14 +12,14 @@ class Flujo {
         Jugador player = new Jugador("Jugador1", 100, 10, 500);
         Flujo flujo = new Flujo(random);
         Salas salas = new Salas();
-        float multiDificultad = 0.5f;
+        float multiDificultad = 0.15f;
         bool juegoTerminado = false;
 
         pantallaInicio();
         Console.Clear();
 
         while (player.PisoActual < PisosTotales && !juegoTerminado) {
-            multiDificultad += 0.5f;
+            multiDificultad += 0.15f;
             juegoTerminado = TipoDePiso(player, random, salas, multiDificultad, juegoTerminado);
             player.PisoActual++;
             if (juegoTerminado) {
@@ -82,8 +82,11 @@ class Flujo {
             "⣿⣿⣿⣿⡇⠄⠄⠄⢐⠑⣀⡀⡀⠄⣠⣠⡄⡀⢀⠒⠄⣘⡙⣶⣤⣅⣤⣄⡉⣅⢬⣺⣳⣿⣯⣿⣿⣿⣾⠾⡿⣿⣿⣽⣭⣦⣭⣬⣖⡰⠐⡍⢝⠽⡻⣿⣿⣿⣵⣽⣿⡿⣫⢝⢮⡴⠚⣃⠡⠠⣀⣄⣴⣍⡄⠂⠃⠄⣀⡤⠉⠁⠄⣀⠄⠂⢀⠄⠁⢄⣿⣿⣿⣿\r\n" +
             "⣿⣿⣿⣿⡇⠄⠄⠄⡀⠊⠓⠅⢠⠄⠙⢙⠸⣮⢳⢟⢧⢓⣶⣶⢯⠍⡘⠨⢿⣷⡛⣽⣻⢿⡻⡯⣫⣬⣾⣿⣿⣿⣿⣿⣯⣿⣽⣿⣿⣯⡮⣮⣷⣵⣿⣿⢻⣯⠿⢟⢝⡽⠘⢁⡡⣐⡡⠶⡿⡃⣵⠿⠋⠁⠔⢉⢐⠉⠑⣨⠴⠂⡠⠑⠨⠐⠁⠄⠄⢐⣿⣿⣿⣿\r\n" +
             "⣿⣿⣿⣿⡇⠄⠄⠄⢈⢄⠄⠄⠑⠒⠈⠄⠄⠄⠊⣈⠓⠊⡧⣂⠄⠉⠄⠘⠲⢛⠿⣮⣲⡻⡽⣧⢟⢿⣿⣷⣿⡹⠿⣽⣽⣻⣹⣲⢯⠧⡯⠻⠺⠩⡉⣀⣠⣤⣾⣾⣟⣁⡦⢗⢮⣫⢵⠺⠈⠠⠁⠃⣀⠵⠊⡡⠡⠐⠊⠠⠔⠋⠁⠄⠁⠄⠄⠄⠄⠂⣿⣿⣿⣿\r\n");
-        Console.WriteLine("▄█████ ▄▄     ▄▄▄  ▄▄ ▄▄   ▄▄▄▄▄▄ ▄▄ ▄▄ ▄▄▄▄▄   ▄█████ ▄▄▄▄  ▄▄ ▄▄▄▄  ▄▄▄▄▄\r\n▀▀▀▄▄▄ ██    ██▀██ ▀███▀     ██   ██▄██ ██▄▄    ▀▀▀▄▄▄ ██▄█▀ ██ ██▄█▄ ██▄▄\r\n█████▀ ██▄▄▄ ██▀██   █       ██   ██ ██ ██▄▄▄   █████▀ ██    ██ ██ ██ ██▄▄▄");
-        Console.Write("\npreisone cualquier tecla para continuar: ");
+        Console.WriteLine("" +
+            "▄█████ ▄▄     ▄▄▄  ▄▄ ▄▄   ▄▄▄▄▄▄ ▄▄ ▄▄ ▄▄▄▄▄   ▄█████ ▄▄▄▄  ▄▄ ▄▄▄▄  ▄▄▄▄▄\r\n" +
+            "▀▀▀▄▄▄ ██    ██▀██ ▀███▀     ██   ██▄██ ██▄▄    ▀▀▀▄▄▄ ██▄█▀ ██ ██▄█▄ ██▄▄\r\n" +
+            "█████▀ ██▄▄▄ ██▀██   █       ██   ██ ██ ██▄▄▄   █████▀ ██    ██ ██ ██ ██▄▄▄");
+        Console.Write("\npresione cualquier tecla para continuar: ");
         Console.ReadKey();   
     }
 
