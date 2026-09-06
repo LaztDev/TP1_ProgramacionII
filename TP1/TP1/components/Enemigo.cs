@@ -20,8 +20,21 @@ public class Enemigo {
         bool estaVivo = Vida > 0 ? true : false;
         return estaVivo;
     }
-   // public void ItemRandom(Random random) {
-   //    double ItemProb = random.NextDouble();       
-   // }
+    public void mostrarEstado() {
+        Console.ForegroundColor = ConsoleColor.Red;
+        Console.Write($"❤  {Vida}  ");
+        Console.ResetColor();
+        Console.ForegroundColor = ConsoleColor.Magenta;
+        Console.Write($"🗡  {PuntosAtaque}  ");
+        Console.ResetColor();
+        Console.ForegroundColor = ConsoleColor.Yellow;
+        Console.Write($"🪙  {OroRecompensa}  \n");
+        Console.ResetColor();
+        Console.WriteLine("\n=====================================================================");
+    }
+
+    // public void ItemRandom(Random random) {
+    //    double ItemProb = random.NextDouble();       
+    // }
 
 }

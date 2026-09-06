@@ -3,13 +3,14 @@ namespace TP1.components;
 
 class Salas {
     public bool Combate(Jugador player, Random random, float multiDificultad, int PisosTotales) {
+        Enemigo monstruo = new Enemigo("Monstruo", 10, 20, multiDificultad);
         Console.Clear();
         Console.ForegroundColor= ConsoleColor.Red;
         Console.WriteLine("-------------------------------COMBATE-------------------------------");
         Console.ResetColor();
         player.mostrarEstado();
+        monstruo.mostrarEstado();
         bool finJuego = false;
-        Enemigo monstruo = new Enemigo("Monstruo", 10, 20, multiDificultad);
         do {
             //turno del jugador
             accionJugador(player, monstruo, random, PisosTotales);
@@ -19,6 +20,8 @@ class Salas {
             }
             else {
                 Console.WriteLine("El monstruo ha sido derrotado.");
+                Console.WriteLine($"Obtuviste: {monstruo.OroRecompensa}g");
+                player.Oro += monstruo.OroRecompensa;
             }
         } while (player.VidaActual > 0 && monstruo.estaVivo());
         Console.ForegroundColor = ConsoleColor.Red;
@@ -162,9 +165,11 @@ class Salas {
                 }
                 else if (TipoAtaque == 1) {
                     player.atacar(monstruo, 0);
+                    Console.WriteLine("Fallaste el ataque!");
                 }
                 else {
                     player.atacar(monstruo, 1);
+                    Console.WriteLine("Atacaste al enemigo!");
                 }
                 break;
             case 2:
@@ -191,6 +196,7 @@ class Salas {
                 Console.WriteLine("Acción inválida, perdiste un turno");
                 break;
         }
+        Console.ReadKey();
     }
     public int validarSeleccion(int maxOpcion) {
         int opcion;

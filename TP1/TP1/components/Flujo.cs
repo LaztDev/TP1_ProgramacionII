@@ -50,8 +50,6 @@ class Flujo {
                 break;
         }
         return juegoTerminado;
-
-
     }
     public void pantallaInicio() {
         Console.WriteLine(
