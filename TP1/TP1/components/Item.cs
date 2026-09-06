@@ -59,7 +59,7 @@ public class Reliquia : Item {
         if (SubTipo == "vida") {
             if (player.VidaActual == player.VidaMaxima) {
                 player.VidaMaxima += Efecto;
-                player.VidaActual = Efecto;
+                player.VidaActual += Efecto;
             }
             else {
                 player.VidaMaxima += Efecto;

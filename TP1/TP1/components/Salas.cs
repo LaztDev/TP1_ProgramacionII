@@ -3,6 +3,7 @@ namespace TP1.components;
 
 class Salas {
     public bool Combate(Jugador player, Random random, float multiDificultad, int PisosTotales) {
+        Console.Clear();
         Console.ForegroundColor= ConsoleColor.Red;
         Console.WriteLine("-------------------------------COMBATE-------------------------------");
         Console.ResetColor();
@@ -13,11 +14,17 @@ class Salas {
             //turno del jugador
             accionJugador(player, monstruo, random, PisosTotales);
             //turno del monstruo
-            monstruo.atacar(player);
+            if (monstruo.estaVivo()) {
+                monstruo.atacar(player);
+            }
+            else {
+                Console.WriteLine("El monstruo ha sido derrotado.");
+            }
         } while (player.VidaActual > 0 && monstruo.estaVivo());
         Console.ForegroundColor = ConsoleColor.Red;
         Console.WriteLine("--------------------------------------------------------------------");
         Console.ResetColor();
+        Console.ReadKey();
         // variable bandera para definir si es game over o no 
         return finJuego = player.VidaActual <= 0 ? true : false;
     }
@@ -87,6 +94,7 @@ class Salas {
 
     }
     public void Descanso(Jugador player) {
+        Console.Clear();
         Console.ForegroundColor = ConsoleColor.DarkBlue;
         Console.WriteLine("------------------------------Descanso------------------------------");
         Console.ResetColor();
@@ -135,6 +143,7 @@ class Salas {
         Console.ForegroundColor = ConsoleColor.DarkCyan;
         Console.WriteLine("----------------------------------------------------------------------");
         Console.ResetColor();
+        Console.ReadKey();
     }
     public int  dados(Random random) {
         return random.Next(1, 7);

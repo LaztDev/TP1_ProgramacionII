@@ -20,20 +20,20 @@ class Flujo {
 
         while (player.PisoActual < PisosTotales && !juegoTerminado) {
             multiDificultad += 0.5f;
-            TipoDePiso(player, random, salas, multiDificultad, juegoTerminado);
+            juegoTerminado = TipoDePiso(player, random, salas, multiDificultad, juegoTerminado);
             player.PisoActual++;
+            if (juegoTerminado) {
+                // agregar metodo de Fin del juego 
+                Console.WriteLine("El juego ha terminado. ¡Gracias por jugar!");
+            }
         }
         if (player.PisoActual == PisosTotales && !juegoTerminado) {
             Enemigo jefeFinal = new Enemigo("Jefe Final", 100, 20, multiDificultad);
             salas.JefeFinal(player, jefeFinal, random,multiDificultad, PisosTotales);
         }
-        if (juegoTerminado) {
-            // agregar metodo de Fin del juego 
-            Console.WriteLine("El juego ha terminado. ¡Gracias por jugar!");
-        }
     }
 
-    public void TipoDePiso(Jugador player, Random random, Salas sala, float multiDificultad, bool juegoTerminado) {
+    public bool TipoDePiso(Jugador player, Random random, Salas sala, float multiDificultad, bool juegoTerminado) {
         int Tipo = random.Next(1, 5);
         switch (Tipo) {
             case 1 :
@@ -49,6 +49,7 @@ class Flujo {
                 sala.SalaDeCofres(random, player);
                 break;
         }
+        return juegoTerminado;
 
 
     }
