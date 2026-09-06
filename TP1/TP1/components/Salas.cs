@@ -22,46 +22,68 @@ class Salas {
         return finJuego = player.VidaActual <= 0 ? true : false;
     }
     public void Tienda(Jugador player) {
-        Console.ForegroundColor = ConsoleColor.DarkYellow;
-        Console.WriteLine("-------------------------------TIENDA-------------------------------");
-        Console.ResetColor();
-        player.mostrarEstado();
+        string tipoCompra = string.Empty;
         List<Item> itemsEnVenta = new List<Item> {
             new Pocion("Poción de Vida","pocion", "vida", 10, 20),
             new Pocion("Poción de Ataque","pocion", "daño", 5, 30),
             new Reliquia("Reliquia de Fuerza", "reliquia","daño", 5, 200)
         };
-        for (int i = 0; i < itemsEnVenta.Count; i++) {
-            Console.WriteLine($"{i + 1}. {itemsEnVenta[i].Nombre}");
-        }
-        Console.WriteLine("Seleccione una accion para realizar");
-        Console.WriteLine("[1]Comprar   [2]Comprar   [3]Salir sin comprar");
-        int opcion = validarSeleccion(4);
+        // muestra los items en venta y sus precios
+        //bucle que no sale hasta que el jugador decida salir de la tienda
         while (true) {
-            if (opcion == 1 || opcion == 2) {
-                for (int i = 0; i < itemsEnVenta.Count; i++) {
-                    if (opcion == i) {
-                        if (player.Oro > itemsEnVenta[i].Precio) {
-                            if (player.inventario.pociones.Count < 3) {
-                                player.Oro -= itemsEnVenta[i].Precio;
-                                player.inventario.agregarPocion((Pocion)itemsEnVenta[i]);
-                                itemsEnVenta.RemoveAt(i);
-                            }
-                            else {
-                                Console.WriteLine("No puedes comprar más pociones, tu inventario está lleno.");
-                            }
-                        }
-                        else {
-                            Console.WriteLine("No tienes suficiente oro para comprar este item.");
-                        }
-                    }
+            Console.Clear();
+            Console.ForegroundColor = ConsoleColor.DarkYellow;
+            Console.WriteLine("-------------------------------TIENDA-------------------------------");
+            Console.ResetColor();
+            player.mostrarEstado();
+
+            for (int i = 0; i < itemsEnVenta.Count; i++) {
+                Console.WriteLine($"{i + 1}. {itemsEnVenta[i].Nombre}, Precio: {itemsEnVenta[i].Precio}");
+            }
+            Console.WriteLine($"-------------------------------------------------------------------");
+            Console.WriteLine("Seleccione una accion para realizar");
+            if (itemsEnVenta.Count == 0) {
+                Console.WriteLine("La tienda está vacía.");
+                break;
+            }
+            for (int i = 0; i <= itemsEnVenta.Count - 1; i++) {
+                Console.Write($"[{i + 1}] Comprar {itemsEnVenta[i].Nombre}  ");
+                if (i==itemsEnVenta.Count - 1) {
+                    Console.WriteLine($"[{i + 2}] Salir de la tienda");
                 }
             }
-            else {
+            int opcion = validarSeleccion(itemsEnVenta.Count() + 1);
+            //Validamos salida de la tienda
+            if (opcion == itemsEnVenta.Count + 1) {
                 Console.WriteLine("Saliendo de la tienda...");
                 break;
             }
+            //validamos que item esta comprando
+            tipoCompra = itemsEnVenta[opcion -1].Tipo == "pocion" ? "poción" : "reliquia";
+            if (itemsEnVenta[opcion - 1].Precio <= player.Oro) {    
+                if (tipoCompra == "poción") {
+                    if (player.inventario.pociones.Count < 3) {
+                        player.inventario.agregarPocion((Pocion)itemsEnVenta[opcion - 1]);
+                        player.Oro -= itemsEnVenta[opcion - 1].Precio;
+                        itemsEnVenta.RemoveAt(opcion - 1);
+                    }
+                    else {
+                        Console.WriteLine("No puedes comprar más pociones, tu inventario está lleno.");
+                    }
+                }
+                else if (tipoCompra == "reliquia") {
+                    player.equiparReliquia((Reliquia)itemsEnVenta[opcion - 1]);
+                    player.Oro -= itemsEnVenta[opcion - 1].Precio;
+                    itemsEnVenta.RemoveAt(opcion - 1);
+                }
+            }
+            else {
+                Console.WriteLine("No tienes suficiente oro para comprar este item.");
+            }
         }
+        Console.ForegroundColor = ConsoleColor.DarkYellow;
+        Console.WriteLine("--------------------------------------------------------------------");
+        Console.ResetColor();
 
     }
     public void Descanso(Jugador player) {
