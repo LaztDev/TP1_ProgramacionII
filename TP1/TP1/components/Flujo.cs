@@ -9,7 +9,7 @@ class Flujo {
     }
     public void FlujoJuego(Random random) {
         Inventario inventario = new Inventario();
-        Jugador player = new Jugador("Jugador1", 10, 15, 500);
+        Jugador player = new Jugador("Jugador1", 100, 10, 500);
         Flujo flujo = new Flujo(random);
         Salas salas = new Salas();
         float multiDificultad = 0.5f;

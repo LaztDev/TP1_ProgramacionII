@@ -90,12 +90,14 @@ class Salas {
         Console.ForegroundColor = ConsoleColor.DarkBlue;
         Console.WriteLine("------------------------------Descanso------------------------------");
         Console.ResetColor();
+        player.mostrarEstado();
         while (true) {
             Console.WriteLine("Seleccione una accion para realizar");
             Console.WriteLine("[1]Descansar y seguir  [2]Seguir adelante");
             int opcion = validarSeleccion(2);
             if (opcion == 1) {
-                player.VidaActual += player.VidaActual <= (player.VidaMaxima / 3) * 2 ? player.VidaMaxima / 3 : player.VidaMaxima;
+                int VidaRecuperada = player.VidaActual <= (player.VidaMaxima / 3) * 2 ? player.VidaMaxima / 3 : player.VidaMaxima - player.VidaActual;
+                player.VidaActual += VidaRecuperada;
                 Console.WriteLine("has descansado tu vida se a recuperado");
                 break;
             }
@@ -107,6 +109,7 @@ class Salas {
         Console.ForegroundColor = ConsoleColor.DarkBlue;
         Console.WriteLine("--------------------------------------------------------------------");
         Console.ResetColor();
+        Console.ReadKey();
     }
     public void JefeFinal(Jugador player, Enemigo monstruo, Random random, float multiDificultad, int PisosTotales) {
         Console.Clear();
