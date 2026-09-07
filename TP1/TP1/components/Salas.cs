@@ -33,13 +33,22 @@ class Salas {
         // variable bandera para definir si es game over o no 
         return finJuego = player.VidaActual <= 0 ? true : false;
     }
-    public void Tienda(Jugador player) {
+    public void Tienda(Jugador player,Random random, List<Item> itemsPosibles) {
         string tipoCompra = string.Empty;
-        List<Item> itemsEnVenta = new List<Item> {
-            new Pocion("Poción de Vida","pocion", "vida", 10, 20),
-            new Pocion("Poción de Ataque","pocion", "daño", 5, 30),
-            new Reliquia("Reliquia de Fuerza", "reliquia","daño", 5, 200)
-        };
+        List<Item> itemsEnVenta = new List<Item>();
+        int indiceLista = 0;
+
+        // bucle encargado de cargar la lsita d ela lienda de objetos aleatorios
+        for (int i = 0; i < 3; i++) {
+            if (i < 3) {
+                indiceLista = random.Next(0, 5);
+                itemsEnVenta.Add(itemsPosibles[indiceLista]);
+            }
+            else {
+                indiceLista = random.Next(4, 12);
+                itemsEnVenta.Add(itemsPosibles[indiceLista]);
+            }
+        }
         // muestra los items en venta y sus precios
         //bucle que no sale hasta que el jugador decida salir de la tienda
         while (true) {
@@ -48,7 +57,7 @@ class Salas {
             Console.WriteLine("-------------------------------TIENDA-------------------------------");
             Console.ResetColor();
             player.mostrarEstado();
-
+            // muestra la lista de objetos en venta de la tienda
             for (int i = 0; i < itemsEnVenta.Count; i++) {
                 Console.WriteLine($"{i + 1}. {itemsEnVenta[i].Nombre}, Precio: {itemsEnVenta[i].Precio}");
             }
@@ -81,6 +90,7 @@ class Salas {
                     }
                     else {
                         Console.WriteLine("No puedes comprar más pociones, tu inventario está lleno.");
+                        Console.ReadKey();
                     }
                 }
                 else if (tipoCompra == "reliquia") {
@@ -91,6 +101,7 @@ class Salas {
             }
             else {
                 Console.WriteLine("No tienes suficiente oro para comprar este item.");
+                Console.ReadKey();
             }
         }
         Console.ForegroundColor = ConsoleColor.DarkYellow;
@@ -131,20 +142,18 @@ class Salas {
         Console.ResetColor();
         Combate(player, random,multiDificultad, PisosTotales);
     }
-    public void SalaDeCofres(Random random, Jugador player) {
+    public void SalaDeCofres(Random random, Jugador player, List<Item> itemPosibles) {
         Console.Clear();
-        List<Reliquia> reliquias = new List<Reliquia>() {
-             new Reliquia("Reliquia de Fuerza", "reliquia","daño", 15, 200),
-             new Reliquia("Reliquia de Vida", "reliquia","vida", 20, 200),
-             new Reliquia("Reliquia de Fuerza", "reliquia","daño", 30, 200)
-        };
+        
         Console.ForegroundColor = ConsoleColor.DarkCyan;
         Console.WriteLine("----------------------------SALA DE COFRES----------------------------");
         Console.ResetColor();
-        int reliquiaAleatoria = random.Next(0, 3);
+
+        int reliquiaAleatoria = random.Next(4, 12);
         Console.Write("se te a otorgado:");
-        reliquias[reliquiaAleatoria].mostrarDetalle();
-        player.equiparReliquia(reliquias[reliquiaAleatoria]);
+        itemPosibles[reliquiaAleatoria].mostrarDetalle();
+        player.equiparReliquia((Reliquia)itemPosibles[reliquiaAleatoria]);
+
         Console.ForegroundColor = ConsoleColor.DarkCyan;
         Console.WriteLine("----------------------------------------------------------------------");
         Console.ResetColor();
