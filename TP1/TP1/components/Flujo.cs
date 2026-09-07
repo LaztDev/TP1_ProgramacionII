@@ -12,6 +12,7 @@ class Flujo {
         Jugador player = new Jugador("Jugador1", 100, 10, 500);
         Flujo flujo = new Flujo(random);
         Salas salas = new Salas();
+        //lista de items disponibles del juego 
         List<Item> itemsPosibles = new List<Item> {
             new Pocion("Poción de Vida Pequeña","pocion", "vida", 15, 5),
             new Pocion("Poción de Vida Grande","pocion", "vida", 40, 20),
@@ -43,8 +44,8 @@ class Flujo {
             }
         }
         if (player.PisoActual == PisosTotales && !juegoTerminado) {
-            Enemigo jefeFinal = new Enemigo("Jefe Final", 100, 20, multiDificultad);
-            salas.JefeFinal(player, jefeFinal, random,multiDificultad, PisosTotales);
+            Enemigo jefeFinal = new Enemigo("Jefe Final", 100, 20, multiDificultad, random, itemsPosibles);
+            salas.JefeFinal(player, jefeFinal, random,multiDificultad, PisosTotales, itemsPosibles);
         }
     }
 
@@ -52,7 +53,7 @@ class Flujo {
         int Tipo = random.Next(1, 5);
         switch (Tipo) {
             case 1 :
-                juegoTerminado = sala.Combate(player, random, multiDificultad, PisosTotales);
+                juegoTerminado = sala.Combate(player, random, multiDificultad, PisosTotales, itemsPosibles);
                 break;
             case 2 :
                 sala.Tienda(player, random, itemsPosibles);

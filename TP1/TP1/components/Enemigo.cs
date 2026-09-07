@@ -1,17 +1,18 @@
 ﻿namespace TP1.components;
 
 public class Enemigo {
+    public Item? posibleDrop; // el ? indica que puede ser null, esto por la exccepcion decompilador preguntar al profe####################################
     public string Nombre { get; protected set; }
     public int Vida { get; set; }
     public int PuntosAtaque { get; protected set; }
     public int OroRecompensa { get; protected set; }
-    // public Item posibleDrop = ItemRandom();
 
-    public Enemigo(string nombre, int vida, int puntosAtaque, float multiDificultad) {
+    public Enemigo(string nombre, int vida, int puntosAtaque, float multiDificultad, Random random, List<Item> itemsposibles) {
         Nombre = nombre;
         Vida = Convert.ToInt32(vida * multiDificultad);
         PuntosAtaque = Convert.ToInt32(puntosAtaque * multiDificultad);
         OroRecompensa = Convert.ToInt32(20 * multiDificultad);
+        ItemRandom(random, itemsposibles);
     }
     public void atacar(Jugador player, int tipoAtaque) {
         Console.Write($"{Nombre}");
@@ -29,7 +30,6 @@ public class Enemigo {
         }
         Console.WriteLine("-----------------");
     }
-
     public bool estaVivo() {
         bool estaVivo = Vida > 0 ? true : false;
         return estaVivo;
@@ -48,8 +48,10 @@ public class Enemigo {
         Console.WriteLine("\n=====================================================================");
     }
 
-    // public void ItemRandom(Random random) {
-    //    double ItemProb = random.NextDouble();       
-    // }
+
+    private void  ItemRandom(Random random, List<Item> itemsPosibles) {
+        Item itemDrop = itemsPosibles[random.Next(0, itemsPosibles.Count())];
+        posibleDrop = itemDrop;
+    }
 
 }

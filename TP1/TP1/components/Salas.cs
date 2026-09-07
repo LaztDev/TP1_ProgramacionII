@@ -1,9 +1,9 @@
-﻿using System.ComponentModel;
+using System.ComponentModel;
 namespace TP1.components;
 
 class Salas {
-    public bool Combate(Jugador player, Random random, float multiDificultad, int PisosTotales) {
-        Enemigo monstruo = new Enemigo("Monstruo", 100, 20, multiDificultad);
+    public bool Combate(Jugador player, Random random, float multiDificultad, int PisosTotales, List<Item> itemsPosibles) {
+        Enemigo monstruo = new Enemigo("Monstruo", 100, 20, multiDificultad, random, itemsPosibles);
         bool finJuego = false;
         do {
             Console.Clear();
@@ -26,6 +26,20 @@ class Salas {
             }
             Console.ReadKey();
         } while (player.VidaActual > 0 && monstruo.estaVivo());
+        // si el monstruo muere hay un 30% de probabilidad de que deje caer un objeto
+        if (!monstruo.estaVivo() && random.NextDouble() < 0.3) {
+            Console.WriteLine("¡El monstruo ha dejado caer un objeto!");
+            monstruo.posibleDrop?.mostrarDetalle();
+            if (monstruo.posibleDrop?.Tipo == "pocion") {
+                player.inventario.agregarPocion((Pocion)monstruo.posibleDrop);
+            }
+            else if (monstruo.posibleDrop?.Tipo == "reliquia") {
+                player.equiparReliquia((Reliquia)monstruo.posibleDrop);
+            }
+        }
+        else {
+            Console.WriteLine("lastima... no hay objetos dropeados");
+        }
         Console.ForegroundColor = ConsoleColor.Red;
         Console.WriteLine("--------------------------------------------------------------------");
         Console.ResetColor();
@@ -135,12 +149,12 @@ class Salas {
         Console.ResetColor();
         Console.ReadKey();
     }
-    public void JefeFinal(Jugador player, Enemigo monstruo, Random random, float multiDificultad, int PisosTotales) {
+    public void JefeFinal(Jugador player, Enemigo monstruo, Random random, float multiDificultad, int PisosTotales, List<Item> itemsPosibles) {
         Console.Clear();
         Console.ForegroundColor = ConsoleColor.DarkRed;
         Console.WriteLine("------------------------------Jefe Final------------------------------");
         Console.ResetColor();
-        Combate(player, random,multiDificultad, PisosTotales);
+        Combate(player, random,multiDificultad, PisosTotales, itemsPosibles);
     }
     public void SalaDeCofres(Random random, Jugador player, List<Item> itemPosibles) {
         Console.Clear();
