@@ -1,4 +1,6 @@
-﻿namespace TP1.components;
+﻿using System.Runtime.CompilerServices;
+
+namespace TP1.components;
 
 class Flujo {
     // que recibe esta clase? 
@@ -8,6 +10,13 @@ class Flujo {
         PisosTotales = random.Next(10, 31); 
     }
     public void FlujoJuego(Random random) {
+        // definiciones
+        float multiDificultad = 0.15f;
+        int[] recorridoSalas = new int[PisosTotales];
+        bool juegoTerminado = false;
+        //carga con un argumento nunmerico para definir los pisos de la sala
+        generarPisos(recorridoSalas, random);
+
         Inventario inventario = new Inventario();
         Jugador player = new Jugador("Jugador1", 100, 10, 500);
         Flujo flujo = new Flujo(random);
@@ -28,41 +37,43 @@ class Flujo {
             new Reliquia("Amuleto del alma", "reliquia","vida", 20, 120),
             new Reliquia("Corazon de alma", "reliquia","vida", 15, 100)
         };
-        float multiDificultad = 0.15f;
-        bool juegoTerminado = false;
-
         pantallaInicio();
         Console.Clear();
 
-        while (player.PisoActual < PisosTotales && !juegoTerminado) {
-            multiDificultad += 0.15f;
-            juegoTerminado = TipoDePiso(player, random, salas, multiDificultad, juegoTerminado, itemsPosibles);
-            player.PisoActual++;
+        for (int i = 0; i <= recorridoSalas.Length; i++ ) {
+
+            juegoTerminado = TipoDePiso(player, random, salas, multiDificultad, juegoTerminado, itemsPosibles, recorridoSalas[i]);
             if (juegoTerminado) {
-                // agregar metodo de Fin del juego 
-                Console.WriteLine("El juego ha terminado. ¡Gracias por jugar!");
+                Console.WriteLine("FELICIDADES LOGRASTE TERMINAR ESTE INFIERNO DE JUEGO :D");
+                break;
             }
-        }
-        if (player.PisoActual == PisosTotales && !juegoTerminado) {
-            Enemigo jefeFinal = new Enemigo("Jefe Final", 100, 20, multiDificultad, random, itemsPosibles);
-            salas.JefeFinal(player, jefeFinal, random,multiDificultad, PisosTotales, itemsPosibles);
+            else if (juegoTerminado && player.VidaActual <= 0) {
+                Console.WriteLine("GAME OVER");
+                break;
+            }
+            player.PisoActual++;
+            multiDificultad += 0.07f;
         }
     }
 
-    public bool TipoDePiso(Jugador player, Random random, Salas sala, float multiDificultad, bool juegoTerminado, List<Item> itemsPosibles) {
-        int Tipo = random.Next(1, 5);
+    public bool TipoDePiso(Jugador player, Random random, Salas sala, float multiDificultad, bool juegoTerminado, List<Item> itemsPosibles, int recorridoSalas) {
+        int Tipo = recorridoSalas;
         switch (Tipo) {
             case 1 :
                 juegoTerminado = sala.Combate(player, random, multiDificultad, PisosTotales, itemsPosibles);
                 break;
             case 2 :
-                sala.Tienda(player, random, itemsPosibles);
+                sala.SalaDeCofres(random, player, itemsPosibles);
                 break;
             case 3:
-                sala.Descanso(player);
+                sala.Tienda(player, random, itemsPosibles);
                 break;
             case 4:
-                sala.SalaDeCofres(random, player, itemsPosibles);
+                sala.Descanso(player);
+                break;
+            case 5:
+                Enemigo jefeFinal = new Enemigo("Jefe Final", 100, 20, multiDificultad, random, itemsPosibles);
+                sala.JefeFinal(player, jefeFinal, random, multiDificultad, PisosTotales, itemsPosibles);
                 break;
         }
         return juegoTerminado;
@@ -105,7 +116,41 @@ class Flujo {
         Console.Write("\npresione cualquier tecla para continuar: ");
         Console.ReadKey();   
     }
+    //metodo que genera los pisos y se encarga de no repetir muchas salas de bonus
+    public void generarPisos(int[] recorridoSalas, Random random) {
+        int tipoSala = 0, rompeSuerte = 0;
 
+        for (int i = 0; i < recorridoSalas.Length; i++) {
+            if (i == recorridoSalas.Length - 1) {   // establece la ubicacion de la sala del jefe
+                recorridoSalas[i] = 5;
+            }
+            else if (i == 0 ) {                 // definimos quee debe comenzar con un cofre o con un combate 
+                tipoSala = random.Next(1, 3);
+                recorridoSalas[i] = tipoSala;
+            }
+            else {                              // define el comportamiento para el resto de salas evitando salas repetidas 
+                tipoSala = random.Next(1, 5);
+                if (recorridoSalas[i - 1] == 1 && tipoSala == 1) {
+                    recorridoSalas[i] = tipoSala;
+                }
+                else { 
+                    while (recorridoSalas[i - 1] == tipoSala) {
+                        tipoSala = random.Next(1, 5);
+                    }
+                    recorridoSalas[i] = tipoSala;
+                }
+            }
+        }
+        for (int i = 0; i < recorridoSalas.Length; i++ ) {
+            if (recorridoSalas[i] > 1 || recorridoSalas[i] < 5) {
+                rompeSuerte++;
+                if (rompeSuerte > 2) {
+                    recorridoSalas[i] = 1;
+                    rompeSuerte = 0;
+                }
+            }
+        }
+    }
 }
 
 
