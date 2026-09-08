@@ -8,6 +8,7 @@ public class Jugador {
     public int AtaqueTemporal;
     public int Oro;
     public int PisoActual;
+    public int PisosTotales;
     public Inventario inventario = new Inventario();
     private List<Reliquia> reliquias = new List<Reliquia>();
 
@@ -15,13 +16,14 @@ public class Jugador {
         get { return AtaqueBase + AtaqueTemporal; }
     }
 
-    public Jugador(string nombre, int vidaMaxima, int ataqueBase, int oro) {
+    public Jugador(string nombre, int vidaMaxima, int ataqueBase, int oro, int SalasTotales) {
         Nombre = nombre;
         VidaMaxima = vidaMaxima;
         VidaActual = vidaMaxima;
         AtaqueBase = ataqueBase;
         Oro = oro;
         PisoActual = 1;
+        PisosTotales = SalasTotales;
     }
 
     public void atacar(Enemigo monstruo, int tipoAtaque) {
@@ -56,7 +58,7 @@ public class Jugador {
         Console.Write($"🪙  {Oro}  ");
         Console.ResetColor();
         Console.ForegroundColor = ConsoleColor.Green;
-        Console.Write($"PISO ACTUAL: {PisoActual}  ");
+        Console.Write($"PISO ACTUAL: {PisoActual} / {PisosTotales} ");
         Console.ResetColor();
         Console.ForegroundColor = ConsoleColor.DarkGray;
         Console.WriteLine("\n=====================================================================");

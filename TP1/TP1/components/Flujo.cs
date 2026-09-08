@@ -18,7 +18,7 @@ class Flujo {
         generarPisos(recorridoSalas, random);
 
         Inventario inventario = new Inventario();
-        Jugador player = new Jugador("Jugador1", 100, 10, 500);
+        Jugador player = new Jugador("Jugador1", 100, 10, 500,recorridoSalas.Length);
         Flujo flujo = new Flujo(random);
         Salas salas = new Salas();
         //lista de items disponibles del juego 
