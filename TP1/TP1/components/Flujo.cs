@@ -40,18 +40,19 @@ class Flujo {
         pantallaInicio();
         Console.Clear();
 
-        for (int i = 0; i <= recorridoSalas.Length; i++ ) {
-            juegoTerminado = TipoDePiso(player, random, salas, multiDificultad, juegoTerminado, itemsPosibles, recorridoSalas[i], recorridoSalas);
-            if (juegoTerminado && player.VidaActual > 0) {
-                Console.WriteLine("FELICIDADES LOGRASTE TERMINAR ESTE INFIERNO DE JUEGO :D");
-                break;
-            }
-            else if (juegoTerminado && player.VidaActual <= 0) {
-                Console.WriteLine("GAME OVER");
+        for (int i = 0; i < recorridoSalas.Length; i++ ) {
+            juegoTerminado = TipoDePiso(player, random, salas, multiDificultad, juegoTerminado, itemsPosibles, recorridoSalas[i], recorridoSalas); // preguntar este error al profesor
+            if (player.VidaActual <= 0) {
                 break;
             }
             player.PisoActual++;
-            multiDificultad += 0.07f;
+            multiDificultad += 0.3f;
+        }
+        if (juegoTerminado && player.VidaActual > 0) {
+            Console.WriteLine("FELICIDADES LOGRASTE TERMINAR ESTE INFIERNO DE JUEGO :D");
+        }
+        else if (juegoTerminado && player.VidaActual <= 0) {
+            Console.WriteLine("GAME OVER");
         }
     }
 
