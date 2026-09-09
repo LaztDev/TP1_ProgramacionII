@@ -4,12 +4,23 @@ namespace TP1.components;
 class Salas {
     public bool Combate(Jugador player, Random random, float multiDificultad, int PisosTotales, List<Item> itemsPosibles) {
         Enemigo monstruo = new Enemigo("Monstruo", 100, 20, multiDificultad, random, itemsPosibles);
+        if (player.PisoActual == PisosTotales ) {
+            monstruo.Nombre = "Jefe Final";
+            monstruo.Vida = 200;
+            monstruo.PuntosAtaque = 40;
+        }
+
         bool finJuego = false;
         do {
             Console.Clear();
             Console.ForegroundColor = ConsoleColor.Red;
             Console.WriteLine("-------------------------------COMBATE-------------------------------");
             Console.ResetColor();
+            if (player.PisoActual == PisosTotales) {
+                Console.ForegroundColor = ConsoleColor.DarkRed;
+                Console.WriteLine("------------------------------JEFE FINAL------------------------------");
+                Console.ResetColor();
+            }
             player.mostrarEstado();
             monstruo.mostrarEstado();
             //turno del jugador
@@ -149,7 +160,7 @@ class Salas {
         Console.ResetColor();
         Console.ReadKey();
     }
-    public void JefeFinal(Jugador player, Enemigo monstruo, Random random, float multiDificultad, int PisosTotales, List<Item> itemsPosibles) {
+    public void JefeFinal(Jugador player, Random random, float multiDificultad, int PisosTotales, List<Item> itemsPosibles) {
         Console.Clear();
         Console.ForegroundColor = ConsoleColor.DarkRed;
         Console.WriteLine("------------------------------Jefe Final------------------------------");

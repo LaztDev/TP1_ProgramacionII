@@ -2,9 +2,9 @@
 
 public class Enemigo {
     public Item? posibleDrop; // el ? indica que puede ser null, esto por la exccepcion decompilador preguntar al profe####################################
-    public string Nombre { get; protected set; }
+    public string Nombre { get; set; }
     public int Vida { get; set; }
-    public int PuntosAtaque { get; protected set; }
+    public int PuntosAtaque { get; set; }
     public int OroRecompensa { get; protected set; }
 
     public Enemigo(string nombre, int vida, int puntosAtaque, float multiDificultad, Random random, List<Item> itemsposibles) {

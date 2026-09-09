@@ -18,7 +18,7 @@ class Flujo {
         generarPisos(recorridoSalas, random);
 
         Inventario inventario = new Inventario();
-        Jugador player = new Jugador("Jugador1", 100, 10, 500,recorridoSalas.Length);
+        Jugador player = new Jugador("Jugador1", 100, 10, 500, recorridoSalas.Length);
         Flujo flujo = new Flujo(random);
         Salas salas = new Salas();
         //lista de items disponibles del juego 
@@ -41,9 +41,8 @@ class Flujo {
         Console.Clear();
 
         for (int i = 0; i <= recorridoSalas.Length; i++ ) {
-
-            juegoTerminado = TipoDePiso(player, random, salas, multiDificultad, juegoTerminado, itemsPosibles, recorridoSalas[i]);
-            if (juegoTerminado) {
+            juegoTerminado = TipoDePiso(player, random, salas, multiDificultad, juegoTerminado, itemsPosibles, recorridoSalas[i], recorridoSalas);
+            if (juegoTerminado && player.VidaActual > 0) {
                 Console.WriteLine("FELICIDADES LOGRASTE TERMINAR ESTE INFIERNO DE JUEGO :D");
                 break;
             }
@@ -56,11 +55,11 @@ class Flujo {
         }
     }
 
-    public bool TipoDePiso(Jugador player, Random random, Salas sala, float multiDificultad, bool juegoTerminado, List<Item> itemsPosibles, int recorridoSalas) {
-        int Tipo = recorridoSalas;
+    public bool TipoDePiso(Jugador player, Random random, Salas sala, float multiDificultad, bool juegoTerminado, List<Item> itemsPosibles, int tipoSala, int[] recorridoSalas) {
+        int Tipo = tipoSala;
         switch (Tipo) {
             case 1 :
-                juegoTerminado = sala.Combate(player, random, multiDificultad, PisosTotales, itemsPosibles);
+                juegoTerminado = sala.Combate(player, random, multiDificultad, recorridoSalas.Length, itemsPosibles);
                 break;
             case 2 :
                 sala.SalaDeCofres(random, player, itemsPosibles);
@@ -72,8 +71,7 @@ class Flujo {
                 sala.Descanso(player);
                 break;
             case 5:
-                Enemigo jefeFinal = new Enemigo("Jefe Final", 100, 20, multiDificultad, random, itemsPosibles);
-                sala.JefeFinal(player, jefeFinal, random, multiDificultad, PisosTotales, itemsPosibles);
+                sala.JefeFinal(player, random, multiDificultad, recorridoSalas.Length, itemsPosibles);
                 break;
         }
         return juegoTerminado;
