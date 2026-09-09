@@ -14,12 +14,14 @@ public class Inventario {
     }
     public void usarPocion(int pocionSelec, Jugador player) {
         int pocionesDisp = pociones.Count();
-        if (pocionSelec > pocionesDisp - 1 || pocionSelec <= 0) {
+        if (pocionSelec > pocionesDisp || pocionSelec <= 0) {
             Console.WriteLine("Vacio...");
         }
         else {
             pociones[pocionSelec - 1].usar(player);
             pociones.RemoveAt(pocionSelec - 1);
+            Console.Write("Usaste:  ");
+            pociones[pocionSelec - 1].mostrarDetalle();
         }
     }
     public void listarPociones() {
